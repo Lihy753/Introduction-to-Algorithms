@@ -2,6 +2,7 @@
 #include <list>
 #include <vector>
 
+
 //插入排序算法
 class InsertationSort
 {
@@ -38,6 +39,41 @@ public:
     std::vector<int> m_list;
 };
 
+//练习 2.1-2 按照非升序排序
+class InsertationSortDown
+{
+public:
+    InsertationSortDown(std::vector<int>& list)
+    {
+        m_list = list;
+    }
+
+    ~InsertationSortDown()
+    {
+        m_list.clear();
+    }
+
+    void sortFunctionDown(std::vector<int>& result)
+    {
+        result.clear();
+        for (int j = 1; j < m_list.size(); ++j)
+        {
+            int key = m_list[j];
+            int i = j -1;
+            while(i > -1 && m_list[i] < key)
+            {
+                m_list[i+1] = m_list[i];
+                --i;
+            }
+            m_list[i + 1] = key;
+
+        }
+        result = m_list;
+    }
+
+public:
+    std::vector<int> m_list;
+};
 
 int main()
 {
@@ -57,8 +93,8 @@ int main()
     std::cout << "]" << std::endl;
 
     std::vector<int> output_result;
-    InsertationSort sort_1(input_list);
-    sort_1.sortFunction(output_result);
+    InsertationSortDown sort_1(input_list);
+    sort_1.sortFunctionDown(output_result);
 
     std::cout << "The reordered result is :" << std::endl;
     std::cout << "[ ";
@@ -70,6 +106,5 @@ int main()
 
     return 0;
 }
-
 
 

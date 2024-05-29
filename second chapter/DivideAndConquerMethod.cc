@@ -51,6 +51,17 @@ public:
         }
     }
 
+    void mergeSort(std::vector<int>& A, int p, int r)
+    {
+        if (p < r)
+        {
+            int q = (p + r)/2;
+            mergeSort(A, p, q);
+            mergeSort(A, q + 1, r);
+            merge(A, p, q, r);
+        }
+    }
+
 public:
     std::vector<int> m_list;
 };
@@ -76,7 +87,7 @@ int main()
 
     std::vector<int> output_result;
     DivideAndConquerMethod sort_1;
-    sort_1.merge(input_list, 0, 3, 5);
+    sort_1.mergeSort(input_list, 0, input_list.size() - 1);
 
     std::cout << "The reordered result is :" << std::endl;
     std::cout << "[ ";

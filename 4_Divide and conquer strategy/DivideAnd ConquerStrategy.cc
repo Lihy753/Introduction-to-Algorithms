@@ -2,6 +2,7 @@
 #include <limits>
 #include <stdexcept>
 #include <array>
+#include <cmath>
 
 //最大子数组问题
 template<size_t Size>
@@ -45,9 +46,30 @@ public:
         
     }
 
+    std::array<int, 3> findMaximumSubarray(int low, int high)
+    {
+        if (high == low)
+            return std::array<int, 3>{low, high, A[low]}
+        else
+        {
+            int mid = static_cast<int>(std::floor(low + high)/2);
+            std::array<int, 3> left_sum = findMaximumSubarray(low, mid);
+            std::array<int, 3> right_sum = findMaximumSubarray(mid + 1, high);
+            std::array<int, 3> cross_sum = findMaxCrossingSubarray(low, mid, high);
+
+            if (left_sum >= right_sum && left_sum >= cross_sum)
+                return left_sum;
+            if (right_sum >= left_sum && right_sum >= cross_sum)
+                return right_sum;
+            else    
+                return cross_sum;
+        }
+    }
+
 private:
     std::array<int, Size> m_array;
 };
+
 
 
 int main()

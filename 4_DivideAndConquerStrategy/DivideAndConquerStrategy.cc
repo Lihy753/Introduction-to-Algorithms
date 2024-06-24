@@ -54,13 +54,8 @@ public:
         {
             int mid = static_cast<int>(std::floor(low + high)/2);
             std::array<int, 3> left_sum = findMaximumSubarray(low, mid);
-            std::cout<< "low = " << low << ", right = " << mid << ", sum = " << left_sum[2] << std::endl;
-
             std::array<int, 3> right_sum = findMaximumSubarray(mid + 1, high);
-            std::cout<< "low = " << mid + 1 << ", right = " << high << ", sum = " << right_sum[2] << std::endl;
             std::array<int, 3> cross_sum = findMaxCrossingSubarray(low, mid, high);
-
-            std::cout<< "low = " << low << ", mid = " << mid << ", right = " << high << ", cross_sum = " << cross_sum[2] << std::endl;
 
             if (left_sum[2] >= right_sum[2] && left_sum[2] >= cross_sum[2])
                 return left_sum;

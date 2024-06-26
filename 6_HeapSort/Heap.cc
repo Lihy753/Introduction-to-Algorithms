@@ -8,7 +8,7 @@ using namespace std;
 class heap
 {
 public:
-    heap(std::vector<int> input, int size) : arr(input), heap_size(size) {}
+    heap(std::vector<int> input) : arr(input) {heap_size = input.size();}
     int PARENT(int i)
     {
         return (std::floor((i + 1)/2) - 1);
@@ -24,6 +24,7 @@ public:
         return (2 * i + 2);
     }
 
+    //O(lgn)
     void MAX_HEAPIFY(std::vector<int>& arr, int i)
     {
         int l = LEFT(i);
@@ -44,7 +45,7 @@ public:
         }
     }
 
-    //将任意输入的一个数组变成一个最大堆数组；
+    //O(n)
     void BUILD_MAX_HEAP()
     {
         for (int i = std::floor(heap_size/2) - 1; i > 0; --i)
@@ -53,6 +54,7 @@ public:
         }
     }
 
+    // O(nlgn)
     void HEAPSORT()
     {
         BUILD_MAX_HEAP();
@@ -63,6 +65,25 @@ public:
             if (heap_size != 0)
                 MAX_HEAPIFY(arr, 0);
         }
+    }
+
+    //priority queue
+    int HEAP_MAXMUM()
+    {
+        return arr[0];
+    }
+
+    //O(lgn)
+    int HEAP_EXTRACT_MAX()
+    {
+        if (heap_size < 0)
+            throw std::invalid_argument("heap underflow");
+
+        int max = arr[0];
+        arr[0] = arr[heap_size - 1];
+        --heap_size;
+        MAX_HEAPIFY(arr, 0);
+        return max;
     }
 
     void fetch_result_arr(std::vector<int>& result)
@@ -92,7 +113,7 @@ int main()
     }
     std::cout << "]" << std::endl;
 
-    heap test(input_list, input_list.size());
+    heap test(input_list);
 
     test.HEAPSORT();
     std::vector<int> result;

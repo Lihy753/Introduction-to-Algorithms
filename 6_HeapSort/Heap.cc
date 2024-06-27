@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <limits>
 
 using namespace std;
 
@@ -48,7 +49,8 @@ public:
     //O(n)
     void BUILD_MAX_HEAP()
     {
-        for (int i = std::floor(heap_size/2) - 1; i > 0; --i)
+        std::cout << "build max heap" << std::endl;
+        for (int i = std::floor(heap_size/2) - 1; i > -1; --i)
         {
             MAX_HEAPIFY(arr, i);
         }
@@ -86,9 +88,39 @@ public:
         return max;
     }
 
+    //O(lgn)
+    void HEAP_INCREASE_KEY(int i, int key)
+    {
+        if (key < arr[i])
+        {
+            throw std::invalid_argument("new key is smaller than current key");
+        }
+
+        arr[i] = key;
+        while (i > 0 && arr[PARENT(i)] < arr[i])
+        {
+            std::swap(arr[i], arr[PARENT(i)]);
+            i = PARENT(i);
+        }
+    }
+
+    //O(lgn)
+    void MAX_HEAP_INSERT(int key)
+    {
+        ++heap_size;
+        arr[heap_size - 1] = std::numeric_limits<int>::min();
+        HEAP_INCREASE_KEY(heap_size - 1, key);
+    }
+
     void fetch_result_arr(std::vector<int>& result)
     {
-        result = arr;
+        // std::cout << "fetch result" << std::endl;
+        // std::cout << "heap_size = " << heap_size << ", arr.size() = " << arr.size() <<  std::endl;
+        if (heap_size > arr.size())
+            heap_size = arr.size();
+
+        result.resize(heap_size);
+        std::copy(arr.begin(), arr.begin() + heap_size, result.begin());
     }
 
 public:
@@ -114,12 +146,46 @@ int main()
     std::cout << "]" << std::endl;
 
     heap test(input_list);
-
-    test.HEAPSORT();
     std::vector<int> result;
+    test.BUILD_MAX_HEAP();
     test.fetch_result_arr(result);
-    
-    std::cout << "reordered array is :" << std::endl;
+    std::cout << "BUILD_MAX_HEAP array is :" << std::endl;
+    std::cout << "[ ";
+    for (int n : result) {
+        std::cout << n << " ";
+    }
+    std::cout << "]" << std::endl;
+
+    int maxnum;
+    maxnum = test.HEAP_MAXMUM();
+    std::cout << "maxnum = " << maxnum << std::endl;
+
+
+
+    test.HEAP_EXTRACT_MAX();
+
+    test.fetch_result_arr(result);
+    std::cout << "HEAP_EXTRACT_MAX array is :" << std::endl;
+    std::cout << "[ ";
+    for (int n : result) {
+        std::cout << n << " ";
+    }
+    std::cout << "]" << std::endl;
+
+
+    test.HEAP_INCREASE_KEY(2, 16);
+    test.fetch_result_arr(result);
+    std::cout << "HEAP_INCREASE_KEY array is :" << std::endl;
+    std::cout << "[ ";
+    for (int n : result) {
+        std::cout << n << " ";
+    }
+    std::cout << "]" << std::endl;
+
+
+    test.MAX_HEAP_INSERT(18);
+    test.fetch_result_arr(result);
+    std::cout << "MAX_HEAP_INSERTs array is :" << std::endl;
     std::cout << "[ ";
     for (int n : result) {
         std::cout << n << " ";

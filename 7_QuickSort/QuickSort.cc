@@ -30,9 +30,14 @@ public:
                 ++i;
                 std::swap(A[i], A[j]);
             }
-            std::swap(A[i + 1], A[r]);
         } 
+        std::swap(A[i + 1], A[r]);
         return i + 1;
+    }
+
+    void fetch_result(std::vector<int>& result)
+    {
+        result = A;
     }
 
 public:
@@ -40,7 +45,7 @@ public:
 };
 
 
-
+//  3 1 5 3 7 9 0;
 int main()
 {
     std::vector<int> input_list;
@@ -54,6 +59,19 @@ int main()
     std::cout << "Your array is :" << std::endl;
     std::cout << "[ ";
     for (int n : input_list) {
+        std::cout << n << " ";
+    }
+    std::cout << "]" << std::endl;
+
+    std::vector<int> result;
+
+    quickSort test(input_list);
+    test.QUICKSORT(0, input_list.size() - 1);
+    test.fetch_result(result);
+
+    std::cout << "Your result is :" << std::endl;
+    std::cout << "[ ";
+    for (int n : result) {
         std::cout << n << " ";
     }
     std::cout << "]" << std::endl;

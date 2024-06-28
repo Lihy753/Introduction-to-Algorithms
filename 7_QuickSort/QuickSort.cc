@@ -19,13 +19,14 @@ public:
         }
     }
 
+    //O(n), n = r - p + 1
     int PARTITION(int p, int r)
     {
         int x = A[r];
         int i = p - 1;
         for (int j = p; j < r; ++j)
         {
-            if (A[j] < x)
+            if (A[j] <= x)
             {
                 ++i;
                 std::swap(A[i], A[j]);
@@ -34,6 +35,25 @@ public:
         std::swap(A[i + 1], A[r]);
         return i + 1;
     }
+
+    void RANDOMIZED_QUICKSORT(int p, int r)
+    {
+        if (p < r)
+        {
+            int q = RANDOMIZED_PARTITION(p , r);
+            RANDOMIZED_QUICKSORT(p, q - 1);
+            RANDOMIZED_QUICKSORT(q + 1, r);
+        }
+    }
+
+    int RANDOMIZED_PARTITION(int p, int r)
+    {
+        int i = std::rand() % (r - p + 1) + p;
+        std::swap(A[r], A[r]);
+        return PARTITION(p, r);
+    }
+
+
 
     void fetch_result(std::vector<int>& result)
     {
@@ -76,4 +96,15 @@ int main()
     }
     std::cout << "]" << std::endl;
 
+
+    std::vector<int> rand_result;
+    quickSort rand_test(input_list);
+    rand_test.RANDOMIZED_QUICKSORT(0, input_list.size() - 1);
+    rand_test.fetch_result(rand_result);
+    std::cout << "Your rand result is :" << std::endl;
+    std::cout << "[ ";
+    for (int n : rand_result) {
+        std::cout << n << " ";
+    }
+    std::cout << "]" << std::endl;
 }

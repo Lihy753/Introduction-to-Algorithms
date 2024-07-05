@@ -8,7 +8,7 @@
 #include <random>
 #include <list>
 
-#include "../2_SecondChapter/InsertationAlgorithm.cc"
+#include "../2_SecondChapter/InsertationAlgorithm.h"
 
 class countSort
 {

@@ -44,9 +44,26 @@ public:
             return RANDOMIZED_SELECT(q + 1, r, i - k);
     }
 
+    // P123, 待定！
     int SELECT()
     {
-        
+        std::vector<std::vector<int>> element_partition;
+        int elenent_num = m_array.size();
+        int group_size = 5;
+        int num_groups = (elenent_num + group_size - 1) / group_size;
+        for (int i = 0; i < num_groups; ++i)
+        {
+            std::vector<int> group;
+            for (int j = i * group_size; j < (i + 1)  * group_size && j < elenent_num; ++j)
+            {
+                group.push_back(m_array[j]);
+            }
+            m_partition_vector.push_back(group);
+        }
+
+        //......
+        //......
+        //......
     }
 
 public:

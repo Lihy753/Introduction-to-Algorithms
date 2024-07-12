@@ -95,4 +95,114 @@ public:
     int tail;
     std::array<int, N + 1> m_array;
 };
+namespace linkedList
+{
+    class Node
+    {
+    public:
+        Node(int val) 
+            : date(val), 
+             prev(nullptr), 
+             next(nullptr) 
+        {
+        }
+        int date;
+        Node* prev;
+        Node* next;
+    };
+
+    class DoublyLinkedList
+    {
+        public:
+            DoublyLinkedList() 
+            : head(nullptr), 
+              tail(nullptr)
+              {
+              }
+
+            ~DoublyLinkedList()
+            {
+                while (head != nullptr)
+                {
+                    Node* temp = head;
+                    head = head->next;
+                    delete temp;
+                }
+            }
+
+            void append(int value)
+            {
+                Node* newNode = new Node(value);
+                if (tail == nullptr)
+                {
+                    head = tail = newNode;
+                }
+                else
+                {
+                    tail->next = newNode;
+                    newNode->prev = tail;
+                    tail = newNode;
+                }
+            }
+
+            void prepend(int value)
+            {
+                Node* newNode = new Node(value);
+                if (head == nullptr)
+                {
+                    head = tail = newNode;
+                }
+                else
+                {
+                    newNode->next = head;
+                    head->prev = newNode;
+                    head = newNode;
+                }
+            }
+
+            void remove(int value)
+            {
+                Node* current = head;
+                while (current != nullptr)
+                {
+                    if (current->date == value)
+                    {
+                        if (current->prev != nullptr)
+                            current->prev->next = current->next;
+                        else
+                            head = current->next;
+                        
+                        if (current->next != nullptr)
+                            current->next->prev = current->prev;
+                        else
+                            tail = current->prev;
+                        
+                        delete current;
+                        return;
+                    }
+                    current = current->next;
+                }
+            }
+
+            void printList()
+            {
+                Node* current = head;
+                while (current != nullptr)
+                {
+                    std::cout << current->date << " ";
+                    current = current->next;
+                }
+                std::cout << std::endl;
+            }
+
+        private:
+            Node* head;
+            Node* tail;
+    };
+
+        
+
+
+}
+
 #endif

@@ -196,13 +196,99 @@ namespace linkedList
             }
 
         private:
+            friend class ListOperation;
             Node* head;
             Node* tail;
     };
 
-        
+    class DoublyLinkedListWithSentinel
+    {
+        public:
+            DoublyLinkedListWithSentinel() 
+            : nil(nullptr)
+              {
+              }
 
+            ~DoublyLinkedListWithSentinel()
+            {
+                while (nil->next != nullptr)
+                {
+                    Node* temp = nil->next;
+                    nil->next = nil->next->next;
+                    delete temp;
+                }
+            }     
 
+        private:
+            friend class ListOperation;  
+            Node* nil;
+    };
+
+    class ListOperation 
+    {
+        public:
+            ListOperation(){}
+
+            ~ListOperation(){}
+
+            //搜索到 date == k 的节点并返回指向该节点的地址；
+            Node* LIST_SEARCH(DoublyLinkedList& L, int k)
+            {
+                Node* x = L.head;
+                while (x != NULL && x->date != k)
+                {
+                    x = x->next;
+                }
+                return x;
+            }
+
+            Node* LIST_SEARCH(DoublyLinkedListWithSentinel& L, int k)
+            {
+                Node* x = L.nil->next;
+                while (x != L.nil && x->date != k)
+                {
+                    x = x->next;
+                }
+                return x;
+            }
+
+            //将节点 x 插入到链表的前段；
+            void LIST_INSERT(DoublyLinkedList& L, Node* x)
+            {
+                x->next = L.head;
+                if (L.head != NULL)
+                    L.head->prev = x;
+                L.head = x;
+                x->prev = NULL;
+            }
+
+            void LIST_INSERT(DoublyLinkedListWithSentinel& L, Node* x)
+            {
+                x->next = L.nil->next;
+                L.nil->next->prev = x;
+                L.nil->next = x;
+                x->prev = L.nil;
+            }
+
+            //删掉节点 x；
+            void LIST_DELETE(DoublyLinkedList& L, Node* x)
+            {
+                if (x->prev != NULL)
+                    x->prev->next = x->next;
+                else
+                    L.head = x->next;
+
+                if (x->next != NULL)
+                    x->next->prev = x->prev;
+            }
+
+            void LIST_DELETE(DoublyLinkedListWithSentinel& L, Node* x)
+            {
+                x->prev->next = x->next;
+                x->next->prev = x->prev;
+            }
+    };
 }
+
 
 #endif

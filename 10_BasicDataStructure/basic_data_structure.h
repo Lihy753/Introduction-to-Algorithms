@@ -17,6 +17,12 @@ public:
     {
     }
 
+    ~stack()
+    {
+        m_array.clear();
+        m_top_index = -1;
+    }
+
     bool STACK_EMPTY()
     {
         return m_top_index == -1;
@@ -58,15 +64,15 @@ public :
 
     void ENQUEUE(int x)
     {
-        if ((tail == N && head == 0) || head == tail + 1)
+        if (head == tail + 1)
         {
             std::cout << "error : overflow" << std::endl;
             return;
         }
 
         m_array[tail] = x;
-        if (tail == N)
-            tail = 0;
+        if (tail == N - 1)
+            tail = -1;
         else
             ++tail;
     }
@@ -77,7 +83,7 @@ public :
             std::cout << "error : underflow" << std::endl;
 
         int x = m_array[head];
-        if (head == N )
+        if (head == N - 1)
             head = 0;
         else
             ++head;
@@ -85,7 +91,7 @@ public :
         return x;
     }
 
-    void fetch_array(std::array<int, N + 1>& result)
+    void fetch_array(std::array<int, N>& result)
     {
         result = m_array;
     }
@@ -93,7 +99,7 @@ public :
 public:
     int head;
     int tail;
-    std::array<int, N + 1> m_array;
+    std::array<int, N> m_array;
 };
 namespace linkedList
 {

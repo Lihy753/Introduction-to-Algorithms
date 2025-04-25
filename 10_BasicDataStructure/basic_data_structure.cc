@@ -4,7 +4,7 @@
 
 int main()
 {
-    int n = 10;
+    int n = 9;
     std::vector<int> input(n);
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -22,13 +22,13 @@ int main()
     }
     std::cout << "]" << std::endl;
 
-    queue<10> m_test;
+    queue<9> m_test;
     for (const auto& fi : input)
     {
         m_test.ENQUEUE(fi);
     }
 
-    std::array<int, 11> result;
+    std::array<int, 9> result;
     m_test.fetch_array(result);
     std::cout << "Begin output deque" << std::endl;
     for (const auto& fi : result)
